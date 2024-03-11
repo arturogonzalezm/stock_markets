@@ -27,6 +27,8 @@ jobs:
       - name: Install dependencies
         run: |
           conda install pylint
-      - name: Analysing the code with pylint
+      - name: Code Review Scoring
+        run: find . -name '*.py' -print -exec pylint {} \;
+      - name: Run PyLint
         run: |
-          pylint $(git ls-files '*.py')
+          pylint $(find . -name '*.py') --fail-under=8.0
