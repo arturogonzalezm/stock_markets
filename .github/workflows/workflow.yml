@@ -29,9 +29,11 @@ jobs:
           conda install pylint
       - name: Code Review Scoring
         run: |
-          source activate stock_markets
+          conda activate stock_markets
           find . -name '*.py' -exec pylint {} \;
+        shell: bash -l {0}
       - name: Run PyLint
         run: |
-          source activate stock_markets
+          conda activate stock_markets
           pylint $(find . -name '*.py') --fail-under=8.0
+        shell: bash -l {0}
