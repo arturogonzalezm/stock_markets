@@ -1,0 +1,9 @@
+name: stock_markets  # Change this to your desired environment name
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10  # Specify your Python version here
+  - pip
+  - pip:
+    - -r file:requirements.txt  # This line tells Conda to use your requirements.txt
