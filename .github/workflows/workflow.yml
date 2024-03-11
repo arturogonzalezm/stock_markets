@@ -23,12 +23,15 @@ jobs:
           python-version: ${{ matrix.python-version }}
           environment-file: environment.yml
           activate-environment: stock_markets
-          channels: anaconda, conda-forge  # Correct input for specifying channels
+          channels: anaconda, conda-forge
       - name: Install dependencies
         run: |
           conda install pylint
       - name: Code Review Scoring
-        run: find . -name '*.py' -print -exec pylint {} \;
+        run: |
+          source activate stock_markets
+          find . -name '*.py' -exec pylint {} \;
       - name: Run PyLint
         run: |
+          source activate stock_markets
           pylint $(find . -name '*.py') --fail-under=8.0
