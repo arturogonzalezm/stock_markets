@@ -23,7 +23,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           environment-file: environment.yml
           activate-environment: stock_markets
-          conda-channels: anaconda, conda-forge
+          channels: anaconda, conda-forge  # Correct input for specifying channels
       - name: Install dependencies
         run: |
           conda install pylint
