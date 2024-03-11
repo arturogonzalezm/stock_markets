@@ -32,8 +32,18 @@ jobs:
           conda activate stock_markets
           find . -name '*.py' -exec pylint {} \;
         shell: bash -l {0}
+      - name: List Python files
+        run: |
+          find . -name '*.py'
+        shell: /usr/bin/bash -l {0}
       - name: Run PyLint
         run: |
-          conda activate stock_markets
-          pylint $(find . -name '*.py') --fail-under=8.0
-        shell: bash -l {0}
+          FILES=$(find . -name '*.py')
+          if [ -z "$FILES" ]; then
+            echo "No Python files to lint."
+          else
+            pylint $FILES --fail-under=8.0
+          fi
+        shell: /usr/bin/bash -l {0}
+
+
