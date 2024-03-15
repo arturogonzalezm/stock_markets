@@ -15,7 +15,9 @@ warnings.filterwarnings("ignore", message="coroutine 'expire_cache' was never aw
 
 def setup_page_config():
     """Sets up page configurations."""
-    st.set_page_config(page_title="API-Powered Backtesting", page_icon=":chart_with_upwards_trend:", layout='wide')
+    st.set_page_config(page_title="API-Powered Backtesting",
+                       page_icon=":chart_with_upwards_trend:",
+                       layout='wide')
     st.image("images/algoAI_large.png", width=300)  # Adjust width as needed
 
 
@@ -25,7 +27,11 @@ def display_tabs():
     :return: The tabs for the different types of financial data.
     :rtype: streamlit.Tabs
     """
-    return st.tabs(["Share Prices", "Crypto Prices", "Forex Prices", "Commodities Prices", "Economic Indicators",
+    return st.tabs(["Share Prices",
+                    "Crypto Prices",
+                    "Forex Prices",
+                    "Commodities Prices",
+                    "Economic Indicators",
                     "Technical Indicators"])
 
 
@@ -37,8 +43,12 @@ def share_prices(tab):
             config = {
                 'symbol': st.text_input('Symbol', 'NVDA', key="share_symbol"),
                 'function': st.selectbox('Function',
-                                         ['TIME_SERIES_INTRADAY', 'TIME_SERIES_DAILY', 'TIME_SERIES_DAILY_ADJUSTED',
-                                          'TIME_SERIES_WEEKLY', 'TIME_SERIES_WEEKLY_ADJUSTED', 'TIME_SERIES_MONTHLY',
+                                         ['TIME_SERIES_INTRADAY',
+                                          'TIME_SERIES_DAILY',
+                                          'TIME_SERIES_DAILY_ADJUSTED',
+                                          'TIME_SERIES_WEEKLY',
+                                          'TIME_SERIES_WEEKLY_ADJUSTED',
+                                          'TIME_SERIES_MONTHLY',
                                           'TIME_SERIES_MONTHLY_ADJUSTED'], key="share_function"),
                 'interval': st.selectbox('Interval', ['1min', '5min', '15min', '30min', '60min'], key="share_interval"),
                 'data_type': st.selectbox('Data Type', ['json', 'csv'], key="share_data_type"),
@@ -48,8 +58,10 @@ def share_prices(tab):
             }
 
         # Move Fetch Data button and data display out of the sidebar
-        st.markdown(f"<span style='font-size: 18.3px;'>{config['symbol'].upper()} Share Prices</span>",
-                    unsafe_allow_html=True)
+        st.markdown(
+            f"<span style='font-size: 18.3px;'>{config['symbol'].upper()} Share Prices</span>",
+            unsafe_allow_html=True
+        )
 
         if st.button('Fetch Data', key="share_fetch"):
             api_request = AlphaVantageRequest(config)
@@ -82,10 +94,10 @@ class APIRequest:
         raise NotImplementedError("Subclass must implement abstract method")
 
 
-class AlphaVantageRequest(APIRequest):
-    """Class for constructing requests to the Alpha Vantage API."""
-
+class AlphaVantageRequest:
+    """Handles construction and representation of requests to the Alpha Vantage API."""
     def __init__(self, config):
+        # initialization code
         self.config = config
 
     def build_url(self):
