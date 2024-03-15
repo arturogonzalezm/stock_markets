@@ -15,7 +15,7 @@ warnings.filterwarnings("ignore", message="coroutine 'expire_cache' was never aw
 
 def setup_page_config():
     """Sets up page configurations."""
-    st.set_page_config(page_title="API-Powered Backtesting",
+    st.set_page_config(page_title="Streamlit Financial Data Visualization App",
                        page_icon=":chart_with_upwards_trend:",
                        layout='wide')
     st.image("images/algoAI_large.png", width=300)  # Adjust width as needed
@@ -96,6 +96,7 @@ class APIRequest:
 
 class AlphaVantageRequest:
     """Handles construction and representation of requests to the Alpha Vantage API."""
+
     def __init__(self, config):
         # initialization code
         self.config = config
@@ -110,17 +111,3 @@ class AlphaVantageRequest:
                 f"&outputsize={self.config['output_size']}"
                 f"&extended_hours={extended_str}"
                 f"&apikey={self.config['api_key']}")
-
-
-def main():
-    """
-    Main function for the Streamlit app.
-    :return: None
-    """
-    setup_page_config()
-    tabs = display_tabs()
-    share_prices(tabs[0])
-
-
-if __name__ == "__main__":
-    main()
