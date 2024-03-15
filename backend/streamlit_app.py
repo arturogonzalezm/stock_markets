@@ -1,15 +1,16 @@
-"""This module contains a Streamlit app for displaying stock prices."""
+"""Module docstring: This module contains the Streamlit app for displaying different financial data types."""
 
-import warnings
+import io
 import tracemalloc
-import requests
-import pandas as pd
-import streamlit as st
+import warnings
 from io import StringIO
 
+import pandas as pd
+import requests
+import streamlit as st
 
+# Initialization code such as tracemalloc.start() and setting up warnings
 tracemalloc.start()
-
 warnings.filterwarnings("ignore", message="coroutine 'expire_cache' was never awaited", category=RuntimeWarning)
 
 # Set the page config to customize the layout and set the title of the app
@@ -66,6 +67,7 @@ with tab1:
 
     class AlphaVantageRequest(APIRequest):
         """Class for constructing requests to the Alpha Vantage API."""
+
         def __init__(self, symbol, function, interval, data_type, output_size, extended, api_key):
             self.symbol = symbol
             self.function = function
@@ -111,3 +113,15 @@ with tab1:
             df = pd.read_csv(data_io)
             # Display the DataFrame as a table
             st.table(df)
+
+
+def main():
+    """
+    Main function for the Streamlit app.
+    :return: None
+    """
+    APIRequest()
+
+
+if __name__ == "__main__":
+    main()
