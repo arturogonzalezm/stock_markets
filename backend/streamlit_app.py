@@ -21,10 +21,9 @@ def setup_page_config():
 
 def display_tabs():
     """Creates tabs for different types of financial data."""
-    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
-        ["Share Prices", "Crypto Prices", "Forex Prices", "Commodities Prices", "Economic Indicators",
-         "Technical Indicators"])
-    return tab1, tab2, tab3, tab4, tab5, tab6
+    tab1 = st.tabs(
+        ["Share Prices"])
+    return tab1
 
 
 def share_prices(tab):
@@ -114,7 +113,7 @@ def main():
     :return: None
     """
     setup_page_config()
-    tab1, tab2, tab3, tab4, tab5, tab6 = display_tabs()
+    tab1 = display_tabs()
     share_prices(tab1)
     # You can implement similar functions for other tabs as needed
 
