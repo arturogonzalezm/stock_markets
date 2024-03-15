@@ -5,5 +5,3 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/arturogonzalezm/stock_markets)
 
 ## Stock Markets
-
-Your API key is: SS1TEF8NADHTRM7N.
