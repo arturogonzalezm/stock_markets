@@ -1,9 +1,12 @@
-import streamlit as st
-import requests
-import pandas as pd
-from io import StringIO
+"""This module contains a Streamlit app for displaying stock prices."""
+
 import warnings
 import tracemalloc
+import requests
+import pandas as pd
+import streamlit as st
+from io import StringIO
+
 
 tracemalloc.start()
 
@@ -49,7 +52,12 @@ with tab1:
         @staticmethod
         @st.cache_data(ttl=600)  # Cache data for 10 minutes; adjust TTL as needed
         def get_data(url):
-            response = requests.get(url)
+            """
+            Fetch data from the constructed URL.
+            :param url: The URL to fetch data from.
+            :return: The response from the API.
+            """
+            response = requests.get(url, timeout=10)  # Timeout after 10 seconds
             return response.text
 
         def build_url(self):
@@ -57,6 +65,7 @@ with tab1:
 
 
     class AlphaVantageRequest(APIRequest):
+        """Class for constructing requests to the Alpha Vantage API."""
         def __init__(self, symbol, function, interval, data_type, output_size, extended, api_key):
             self.symbol = symbol
             self.function = function
