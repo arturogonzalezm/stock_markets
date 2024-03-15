@@ -1,1 +1,6 @@
 pylint
+requests
+pandas
+streamlit
+watchdog
+yfinance
