@@ -44,7 +44,7 @@ Make sure you have Python 3.10 or later installed on your system. The app relies
 4. Run the Streamlit app:
 
     ```
-    streamlit run streamlit_app.py
+    streamlit run app.py
     ```
 
 ## Code Explanation
