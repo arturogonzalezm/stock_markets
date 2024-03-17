@@ -53,7 +53,7 @@ def share_prices(tab):
                 'interval': st.selectbox('Interval', ['1min', '5min', '15min', '30min', '60min'], key="share_interval"),
                 'data_type': st.selectbox('Data Type', ['json', 'csv'], key="share_data_type"),
                 'output_size': st.selectbox('Output Size', ['compact', 'full'], key="share_output_size"),
-                'extended': st.checkbox('Extended Hours', False, key="share_extended"),
+                'extended': st.toggle('Extended Hours', False, key="share_extended"),
                 'api_key': st.text_input('API Key', 'demo', key="share_api_key")
             }
 
