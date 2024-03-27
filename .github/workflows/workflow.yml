@@ -47,7 +47,7 @@ jobs:
         shell: /usr/bin/bash -l {0}
       - name: Run Tests and Generate Coverage Report
         run: |
-          python -m pytest --cov=./your_project_directory
+          python -m pytest --cov=./stock_markets --cov-report=xml
           coverage xml
 
       - name: Upload Coverage to Codecov
