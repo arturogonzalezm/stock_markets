@@ -22,7 +22,7 @@ def plot_candlestick_chart(df):
                                          close=df['close'])])
 
     fig.update_layout(xaxis_rangeslider_visible=False)
-    st.plotly_chart(fig)
+    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 
 
 def setup_page_config():
@@ -71,27 +71,31 @@ def share_prices(tab):
                 'api_key': st.text_input('API Key', 'demo', key="share_api_key")
             }
 
+        # Fetch data based on the sidebar inputs
+        api_request = AlphaVantageRequest(config)
+        url = api_request.build_url()
+        data = APIRequest.get_data(url)  # This should be returning a string if get_data is correctly implemented
+
         # Move Fetch Data button and data display out of the sidebar
         st.markdown(
             f"<span style='font-size: 18.3px;'>{config['symbol'].upper()} Share Prices</span>",
             unsafe_allow_html=True
         )
 
-        if st.button('Refresh', key="share_fetch"):
-            api_request = AlphaVantageRequest(config)
-            url = api_request.build_url()
-            data = APIRequest.get_data(url)  # This should be returning a string if get_data is correctly implemented
+        if config['data_type'] == 'json':
+            st.json(data)
+        else:  # Assume CSV
+            # Convert string data to DataFrame
+            data_io = StringIO(data)
+            df = pd.read_csv(data_io)
 
-            if config['data_type'] == 'json':
-                st.json(data)
-            else:  # Assume CSV
-                # Convert string data to DataFrame
-                data_io = StringIO(data)
-                df = pd.read_csv(data_io)
-                st.table(df)
+            st.subheader('Candlestick Chart')
+            plot_candlestick_chart(df)
 
-                st.subheader('Candlestick Chart')
-                plot_candlestick_chart(df)
+            st.subheader('Share Prices Table')
+            # Set the height of the table and make it scrollable
+            st.dataframe(df.style.set_table_styles(
+                [dict(selector='table', props=[('max-height', '400px'), ('overflow-y', 'scroll')])]))
 
 
 class APIRequest:
