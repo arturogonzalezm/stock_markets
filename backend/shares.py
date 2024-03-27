@@ -15,14 +15,17 @@ warnings.filterwarnings("ignore", message="coroutine 'expire_cache' was never aw
 
 
 def plot_candlestick_chart(df):
-    fig = go.Figure(data=[go.Candlestick(x=df['timestamp'],
-                                         open=df['open'],
-                                         high=df['high'],
-                                         low=df['low'],
-                                         close=df['close'])])
+    if 'timestamp' in df.columns:
+        fig = go.Figure(data=[go.Candlestick(x=df['timestamp'],
+                                             open=df['open'],
+                                             high=df['high'],
+                                             low=df['low'],
+                                             close=df['close'])])
 
-    fig.update_layout(xaxis_rangeslider_visible=False)
-    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False}, height=700)
+        fig.update_layout(xaxis_rangeslider_visible=False)
+        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': True}, height=700)
+    else:
+        st.warning("DataFrame does not contain 'timestamp' column.")
 
 
 def setup_page_config():
@@ -68,7 +71,7 @@ def share_prices(tab):
                 'extended': st.toggle('Extended Hours', False, key="share_extended"),
                 'month': st.text_input('Month', '2009-01', key="share_month"),
                 # 'month': st.date_input('Month', value=pd.to_datetime('2009-01'), key="share_month"),
-                'api_key': st.text_input('API Key', 'demo', key="share_api_key")
+                'api_key': st.text_input('API Key', 'demo', key="share_api_key", type="password")
             }
 
         # Fetch data based on the sidebar inputs
