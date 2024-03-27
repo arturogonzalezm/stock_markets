@@ -6,3 +6,4 @@ watchdog
 yfinance
 plotly
 pytest
+codecov
