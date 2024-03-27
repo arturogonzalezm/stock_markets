@@ -53,7 +53,7 @@ jobs:
 
       - name: Run Tests and Generate Coverage Report
         run: |
-          python -m pytest --cov=./stock_markets --cov-report=xml
+          /home/runner/conda_pkgs_dir/stock_markets/bin/python -m pytest --cov=./stock_markets --cov-report=xml
           coverage xml
 
       - name: Upload Coverage to Codecov
