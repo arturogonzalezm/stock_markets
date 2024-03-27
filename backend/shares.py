@@ -22,7 +22,7 @@ def plot_candlestick_chart(df):
                                          close=df['close'])])
 
     fig.update_layout(xaxis_rangeslider_visible=False)
-    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
+    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False}, height=700)
 
 
 def setup_page_config():
@@ -78,7 +78,7 @@ def share_prices(tab):
 
         # Move Fetch Data button and data display out of the sidebar
         st.markdown(
-            f"<span style='font-size: 18.3px;'>{config['symbol'].upper()} Share Prices</span>",
+            f"<span style='font-size: 19px;'>{config['symbol'].upper()} :blue[Share Prices]</span>",
             unsafe_allow_html=True
         )
 
@@ -89,13 +89,14 @@ def share_prices(tab):
             data_io = StringIO(data)
             df = pd.read_csv(data_io)
 
-            st.subheader('Candlestick Chart')
+            # st.subheader('Candlestick Chart')
             plot_candlestick_chart(df)
 
-            st.subheader('Share Prices Table')
+            # st.subheader('Share Prices Table')
             # Set the height of the table and make it scrollable
             st.dataframe(df.style.set_table_styles(
-                [dict(selector='table', props=[('max-height', '400px'), ('overflow-y', 'scroll')])]))
+                [dict(selector='table', props=[('max-height', '400px'), ('overflow-y', 'scroll'), ('width', '100%')])]
+            ), width=1300)
 
 
 class APIRequest:
