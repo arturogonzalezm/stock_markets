@@ -45,5 +45,8 @@ jobs:
             pylint $FILES --fail-under=8.0
           fi
         shell: /usr/bin/bash -l {0}
-
-
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: arturogonzalezm/stock_markets
