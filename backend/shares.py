@@ -7,10 +7,22 @@ from io import StringIO
 import pandas as pd
 import requests
 import streamlit as st
+import plotly.graph_objects as go
 
 # Initialization code such as tracemalloc.start() and setting up warnings
 tracemalloc.start()
 warnings.filterwarnings("ignore", message="coroutine 'expire_cache' was never awaited", category=RuntimeWarning)
+
+
+def plot_candlestick_chart(df):
+    fig = go.Figure(data=[go.Candlestick(x=df['timestamp'],
+                                         open=df['open'],
+                                         high=df['high'],
+                                         low=df['low'],
+                                         close=df['close'])])
+
+    fig.update_layout(xaxis_rangeslider_visible=False)
+    st.plotly_chart(fig)
 
 
 def setup_page_config():
@@ -54,6 +66,8 @@ def share_prices(tab):
                 'data_type': st.selectbox('Data Type', ['json', 'csv'], key="share_data_type"),
                 'output_size': st.selectbox('Output Size', ['compact', 'full'], key="share_output_size"),
                 'extended': st.toggle('Extended Hours', False, key="share_extended"),
+                'month': st.text_input('Month', '2009-01', key="share_month"),
+                # 'month': st.date_input('Month', value=pd.to_datetime('2009-01'), key="share_month"),
                 'api_key': st.text_input('API Key', 'demo', key="share_api_key")
             }
 
@@ -63,7 +77,7 @@ def share_prices(tab):
             unsafe_allow_html=True
         )
 
-        if st.button('Fetch Data', key="share_fetch"):
+        if st.button('Refresh', key="share_fetch"):
             api_request = AlphaVantageRequest(config)
             url = api_request.build_url()
             data = APIRequest.get_data(url)  # This should be returning a string if get_data is correctly implemented
@@ -72,9 +86,12 @@ def share_prices(tab):
                 st.json(data)
             else:  # Assume CSV
                 # Convert string data to DataFrame
-                data_io = StringIO(data)  # This should no longer cause a TypeError
+                data_io = StringIO(data)
                 df = pd.read_csv(data_io)
                 st.table(df)
+
+                st.subheader('Candlestick Chart')
+                plot_candlestick_chart(df)
 
 
 class APIRequest:
@@ -110,4 +127,5 @@ class AlphaVantageRequest:
                 f"&datatype={self.config['data_type']}"
                 f"&outputsize={self.config['output_size']}"
                 f"&extended_hours={extended_str}"
-                f"&apikey={self.config['api_key']}")
+                f"&apikey={self.config['api_key']}"
+                f"&month={self.config['month']}")

@@ -1,4 +1,4 @@
-from backend.streamlit_app import setup_page_config, display_tabs, share_prices
+from backend.shares import setup_page_config, display_tabs, share_prices
 
 
 def main():
