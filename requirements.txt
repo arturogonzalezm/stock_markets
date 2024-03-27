@@ -7,3 +7,4 @@ yfinance
 plotly
 pytest
 codecov
+pytest-cov
