@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          conda install pylint pytest coverage pytest-cov
+          conda install -c conda-forge pytest coverage pytest-cov
 
       - name: Code Review Scoring
         run: |
@@ -51,9 +51,12 @@ jobs:
           fi
         shell: /usr/bin/bash -l {0}
 
+      - name: Activate Conda environment
+        run: |
+          source activate stock_markets
       - name: Run Tests and Generate Coverage Report
         run: |
-          /home/runner/conda_pkgs_dir/stock_markets/bin/python -m pytest --cov=./stock_markets --cov-report=xml
+          pytest --cov=./stock_markets --cov-report=xml
           coverage xml
 
       - name: Upload Coverage to Codecov
