@@ -47,7 +47,10 @@ Make sure you have Python 3.10 or later installed on your system. The app relies
     streamlit run app.py
     ```
    
+White:
 ![white](images/white.png)
+
+Dark:
 ![dark](images/dark.png)
 
 ## Code Explanation
