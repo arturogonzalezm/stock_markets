@@ -1,9 +1,9 @@
 name: stock_markets
 channels:
-  - conda-forge
   - defaults
+  - conda-forge
 dependencies:
-  - python=3.10  # or your desired version
+  - python=3.10
   - pip
   - pip:
-      - -r requirements.txt  # Make sure this points correctly to your requirements.txt
+    - -r requirements.txt
