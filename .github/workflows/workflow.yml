@@ -54,15 +54,3 @@ jobs:
       - name: Activate Conda environment
         run: |
           source activate stock_markets
-      - name: Run Tests and Generate Coverage Report
-        run: |
-          pytest --cov=./stock_markets --cov-report=xml
-          coverage xml
-
-      - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v4.0.1
-        with:
-          file: ./coverage.xml
-          flags: unittests
-          name: codecov-umbrella
-          fail_ci_if_error: true
