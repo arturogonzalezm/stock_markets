@@ -61,11 +61,11 @@ def plot_candlestick_chart(df):
     :param df:
     :return:
     """
-    if df.empty or not set(['timestamp', 'open', 'high', 'low', 'close']).issubset(df.columns):
+    if df.empty or not {'timestamp', 'open', 'high', 'low', 'close'}.issubset(df.columns):
         streamlit.warning("DataFrame does not contain required columns.")
         return
     # Check for invalid (non-numeric) data in financial columns
-    if df[['open', 'high', 'low', 'close']].applymap(lambda x: isinstance(x, (int, float))).all().all() == False:
+    if not df[['open', 'high', 'low', 'close']].applymap(lambda x: isinstance(x, (int, float))).all().all():
         streamlit.warning("Invalid data in 'open', 'high', 'low', or 'close' column.")
         return
     # Plotting logic would go here (omitted for brevity)
