@@ -28,17 +28,17 @@ class APIRequest:
 class AlphaVantageRequest:
     def __init__(self, config):
         """
-        Initializes an AlphaVantageRequest object based on provided configuration
-        :param config: Configuration dictionary for the request
-        :return: AlphaVantageRequest object
+        Constructor for the AlphaVantageRequest class
+        :param config:
         """
         self.config = config
 
     def build_url(self):
         """
-        Constructs and returns a URL based on the provided configuration
-        :return: URL string
+        Convert boolean values in config to lowercase strings and construct the URL
+        :return:
         """
+        modified_config = {k: str(v).lower() if isinstance(v, bool) else v for k, v in self.config.items()}
         return ("https://www.alphavantage.co/query"
                 "?function={function}"
                 "&symbol={symbol}"
@@ -47,7 +47,7 @@ class AlphaVantageRequest:
                 "&outputsize={output_size}"
                 "&extended_hours={extended}"
                 "&apikey={api_key}"
-                "&month={month}").format(**self.config)
+                "&month={month}").format(**modified_config)
 
 
 # Function to plot a candlestick chart given a DataFrame
