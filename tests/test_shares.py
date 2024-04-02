@@ -5,12 +5,9 @@ including plotting and API request building.
 
 import pytest
 import pandas as pd
-from requests import RequestException
 
 # If you have import errors, ensure your PYTHONPATH is correctly set up
 # or adjust your project structure.
-from requests.exceptions import RequestException
-
 from backend.shares import plot_candlestick_chart, AlphaVantageRequest
 
 
