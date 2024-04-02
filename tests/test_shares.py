@@ -3,9 +3,11 @@ This module contains tests for the shares functionality, specifically focusing o
 URL construction for Alpha Vantage API requests, and plotting functionality for financial data.
 """
 
-# Importing necessary libraries for the module
-import pytest
+# Importing in-built modules
 from unittest.mock import patch
+
+# Importing third-party modules
+import pytest
 import requests
 import pandas as pd
 import streamlit
@@ -13,14 +15,16 @@ import streamlit
 
 # Placeholder class for generic API requests
 class APIRequest:
+    """Represents a generic API request."""
     @staticmethod
     def get_data(url):
         """
-        Simulates fetching data from a given URL
-        :param url:
-        :return:
+        Fetches data from a given URL.
+        :param url: The URL to fetch data from.
+        :return: The data fetched from the URL.
+        :rtype: bytes
         """
-        response = requests.get(url)
+        response = requests.get(url, timeout=5)
         return response.content
 
 
@@ -92,6 +96,10 @@ def test_api_request_get_data_failure():
 
 # Test case for verifying URL construction for Alpha Vantage API requests
 def test_alpha_vantage_request_build_url():
+    """
+    Test case to verify URL construction for Alpha Vantage API requests
+    :return:
+    """
     config = {
         'symbol': 'AAPL',
         'function': 'TIME_SERIES_INTRADAY',
@@ -117,6 +125,10 @@ def test_alpha_vantage_request_build_url():
 
 # Test case to ensure the plotting function handles an empty DataFrame correctly
 def test_plot_candlestick_chart_with_empty_dataframe():
+    """
+    Test case to ensure the plotting function handles an empty DataFrame correctly
+    :return:
+    """
     df = pd.DataFrame()
     with patch('streamlit.warning') as mock_warning:
         plot_candlestick_chart(df)
@@ -125,6 +137,10 @@ def test_plot_candlestick_chart_with_empty_dataframe():
 
 # Test case to ensure the plotting function identifies and handles invalid DataFrame data
 def test_plot_candlestick_chart_with_invalid_dataframe():
+    """
+    Test case to ensure the plotting function identifies and handles invalid DataFrame data
+    :return:
+    """
     df = pd.DataFrame({
         'timestamp': ['2022-01-01', '2022-01-02'],
         'open': [100, 110],
