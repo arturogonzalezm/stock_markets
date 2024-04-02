@@ -8,6 +8,7 @@ import warnings
 from io import StringIO
 
 import pandas as pd
+import numpy as np
 import requests
 import streamlit as st
 import plotly.graph_objects as go
@@ -62,6 +63,24 @@ def display_tabs():
                     "Commodities Prices",
                     "Economic Indicators",
                     "Technical Indicators"])
+
+
+def simulate_trading_based_on_moving_average(df):
+    """
+    Simulates trading decisions based on moving average crossover strategy.
+    :param df: DataFrame containing the price data.
+    :return: None
+    """
+    # Calculate short-term (20-day) and long-term (50-day) moving averages
+    df['short_ma'] = df['close'].rolling(window=20).mean()
+    df['long_ma'] = df['close'].rolling(window=50).mean()
+
+    # Identify crossovers
+    df['signal'] = np.where(df['short_ma'] > df['long_ma'], 'buy', 'sell')
+
+    # Simulate a trading decision based on the latest data
+    latest_decision = df['signal'].iloc[-1]
+    st.write(f"Latest trading decision based on moving average strategy: **{latest_decision.upper()}**")
 
 
 # Functionality for the Share Prices tab
