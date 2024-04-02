@@ -3,7 +3,6 @@
 [![Read the Docs](https://img.shields.io/readthedocs/:packageName)](https://github.com/arturogonzalezm/stock_markets/wiki)
 [![PyLint](https://github.com/arturogonzalezm/stock_markets/actions/workflows/workflow.yml/badge.svg)](https://github.com/arturogonzalezm/stock_markets/actions/workflows/workflow.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/arturogonzalezm/stock_markets)
-[![Actions status](https://github.com/arturogonzalezm/stock_markets/workflows/workflow.yml/badge.svg)](https://github.com/arturogonzalezm/stock_markets/actions/workflows/workflow.yml)
 
 # Streamlit Financial Data Visualization App
 
