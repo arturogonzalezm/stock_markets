@@ -1,11 +1,18 @@
+"""
+This module contains tests for the shares functionality,
+including plotting and API request building.
+"""
+
 import pytest
 import pandas as pd
+# If you have import errors, ensure your PYTHONPATH is correctly set up
+# or adjust your project structure.
 from backend.shares import plot_candlestick_chart, AlphaVantageRequest
 
 
-# Fixture for a DataFrame with a 'timestamp' column
 @pytest.fixture
 def df_with_timestamp():
+    """Fixture for DataFrame with a timestamp column."""
     return pd.DataFrame({
         'timestamp': ['2022-01-01', '2022-01-02'],
         'open': [100, 110],
@@ -15,9 +22,9 @@ def df_with_timestamp():
     })
 
 
-# Fixture for a DataFrame without a 'timestamp' column
 @pytest.fixture
 def df_without_timestamp():
+    """Fixture for DataFrame without a timestamp column."""
     return pd.DataFrame({
         'open': [100, 110],
         'high': [120, 130],
@@ -26,9 +33,9 @@ def df_without_timestamp():
     })
 
 
-# Fixture for AlphaVantageRequest configuration
 @pytest.fixture
 def alpha_vantage_config():
+    """Fixture for AlphaVantageRequest configuration."""
     return {
         'symbol': 'AAPL',
         'function': 'TIME_SERIES_INTRADAY',
@@ -41,28 +48,36 @@ def alpha_vantage_config():
     }
 
 
-# Test plot_candlestick_chart with timestamp
 def test_plot_candlestick_chart_with_timestamp(df_with_timestamp):
-    # Assuming plot_candlestick_chart function returns something or use pytest.raises to check for exceptions
+    """
+    Test that plot_candlestick_chart function works with timestamp column.
+    """
     plot_candlestick_chart(df_with_timestamp)
 
 
-# Test plot_candlestick_chart without timestamp
 def test_plot_candlestick_chart_without_timestamp(df_without_timestamp):
-    # Assuming plot_candlestick_chart function returns something or use pytest.raises to check for exceptions
+    """
+    Test that plot_candlestick_chart function handles absence of timestamp column.
+    """
     plot_candlestick_chart(df_without_timestamp)
 
 
-# Test AlphaVantageRequest URL building
 def test_build_url(alpha_vantage_config):
+    """
+    Test that AlphaVantageRequest.build_url correctly constructs the request URL.
+    """
     av_request = AlphaVantageRequest(alpha_vantage_config)
     url = av_request.build_url()
-    assert url.startswith("https://www.alphavantage.co/query")
-    assert "function=TIME_SERIES_INTRADAY" in url
-    assert "symbol=AAPL" in url
-    assert "interval=5min" in url
-    assert "datatype=json" in url
-    assert "outputsize=compact" in url
-    assert "extended_hours=false" in url
-    assert "apikey=your_api_key" in url
-    assert "month=2023-01" in url
+    expected_parts = [
+        "https://www.alphavantage.co/query",
+        "function=TIME_SERIES_INTRADAY",
+        "symbol=AAPL",
+        "interval=5min",
+        "datatype=json",
+        "outputsize=compact",
+        "extended_hours=false",
+        "apikey=your_api_key",
+        "month=2023-01"
+    ]
+    for part in expected_parts:
+        assert part in url
