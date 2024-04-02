@@ -1,11 +1,19 @@
+"""
+This module contains tests for the shares functionality, specifically focusing on API data retrieval,
+URL construction for Alpha Vantage API requests, and plotting functionality for financial data.
+"""
+
 import pytest
+from unittest.mock import patch
 import requests
 import pandas as pd
-from unittest.mock import patch, MagicMock
 from backend.shares import APIRequest, AlphaVantageRequest, plot_candlestick_chart
 
 
 def test_api_request_get_data_success():
+    """
+    Test successful data retrieval from API.
+    """
     with patch('requests.get') as mock_get:
         mock_get.return_value.content = b'success'
         url = 'http://test.com'
@@ -13,6 +21,9 @@ def test_api_request_get_data_success():
 
 
 def test_api_request_get_data_failure():
+    """
+    Test handling of request failures from API.
+    """
     with patch('requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.RequestException
         url = 'http://test.com'
@@ -21,6 +32,9 @@ def test_api_request_get_data_failure():
 
 
 def test_alpha_vantage_request_build_url():
+    """
+    Test URL construction for Alpha Vantage API requests.
+    """
     config = {
         'symbol': 'AAPL',
         'function': 'TIME_SERIES_INTRADAY',
@@ -32,19 +46,22 @@ def test_alpha_vantage_request_build_url():
         'api_key': 'your_api_key'
     }
     av_request = AlphaVantageRequest(config)
-    url = av_request.build_url()
-    assert url == ("https://www.alphavantage.co/query"
-                   "?function=TIME_SERIES_INTRADAY"
-                   "&symbol=AAPL"
-                   "&interval=5min"
-                   "&datatype=json"
-                   "&outputsize=compact"
-                   "&extended_hours=false"
-                   "&apikey=your_api_key"
-                   "&month=2023-01")
+    expected_url = ("https://www.alphavantage.co/query"
+                    "?function=TIME_SERIES_INTRADAY"
+                    "&symbol=AAPL"
+                    "&interval=5min"
+                    "&datatype=json"
+                    "&outputsize=compact"
+                    "&extended_hours=false"
+                    "&apikey=your_api_key"
+                    "&month=2023-01")
+    assert av_request.build_url() == expected_url
 
 
 def test_plot_candlestick_chart_with_empty_dataframe():
+    """
+    Test plotting functionality with an empty DataFrame.
+    """
     df = pd.DataFrame()
     with patch('streamlit.warning') as mock_warning:
         plot_candlestick_chart(df)
@@ -52,6 +69,9 @@ def test_plot_candlestick_chart_with_empty_dataframe():
 
 
 def test_plot_candlestick_chart_with_invalid_dataframe():
+    """
+    Test plotting functionality with invalid data in DataFrame.
+    """
     df = pd.DataFrame({
         'timestamp': ['2022-01-01', '2022-01-02'],
         'open': [100, 110],
