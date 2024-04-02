@@ -10,3 +10,4 @@ codecov
 pytest-cov
 coverage
 ruff
+pytest-mock

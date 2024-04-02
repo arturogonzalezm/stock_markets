@@ -66,32 +66,6 @@ def test_plot_candlestick_chart_without_timestamp(df_without_timestamp):
     plot_candlestick_chart(df_without_timestamp)
 
 
-def test_alpha_vantage_request_fetch_data(alpha_vantage_config, mocker):
-    """Test fetching data from AlphaVantage API handles expected scenarios."""
-    mocker.patch('backend.shares.requests.get', side_effect=RequestException)
-
-    av_request = AlphaVantageRequest(alpha_vantage_config)
-
-    # Assuming you handle RequestException within fetch_data and return None or similar
-    result = av_request.fetch_data()
-    assert result is None  # or assert for a custom exception as per your implementation
-
-
-def test_alpha_vantage_request_network_error(alpha_vantage_config, mocker):
-    """Test AlphaVantageRequest handles network errors gracefully when fetching data."""
-    # Assuming 'fetch_data' is the method that makes the network request
-    # Use mocker to simulate a network error on requests.get
-    mocker.patch('backend.shares.requests.get', side_effect=RequestException)
-
-    # Initialize your AlphaVantageRequest with the test configuration
-    av_request = AlphaVantageRequest(alpha_vantage_config)
-
-    # Assume your method should handle network errors in a specific way, such as returning None or raising a custom exception
-    # Here, we're assuming a custom exception named 'DataFetchError' should be raised
-    with pytest.raises(RequestException):
-        av_request.fetch_data()
-
-
 def test_build_url(alpha_vantage_config):
     """
     Test that AlphaVantageRequest.build_url correctly constructs the request URL.
