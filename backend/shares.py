@@ -95,7 +95,7 @@ def share_prices(tab):
         # Fetch data based on the sidebar inputs
         api_request = AlphaVantageRequest(config)
         url = api_request.build_url()
-        data = APIRequest.get_data(url)  # This should be returning a string if get_data is correctly implemented
+        data = APIRequest.get_data(url)  # This should be returning bytes if get_data is correctly implemented
 
         # Move Fetch Data button and data display out of the sidebar
         st.markdown(
@@ -106,8 +106,8 @@ def share_prices(tab):
         if config['data_type'] == 'json':
             st.json(data)
         else:  # Assume CSV
-            # Convert string data to DataFrame
-            data_io = StringIO(data)
+            # Convert bytes data to DataFrame
+            data_io = StringIO(data.decode('utf-8'))
             df = pd.read_csv(data_io)
 
             # Plot candlestick chart
@@ -128,10 +128,10 @@ class APIRequest:
         Fetch data from the constructed URL.
         :param url: The URL to fetch data from.
         :return: The data fetched from the URL.
-        :rtype: str
+        :rtype: bytes
         """
         response = requests.get(url, timeout=10)  # Timeout after 10 seconds
-        return response.text  # Make sure to return response.text, not just response
+        return response.content  # Return response.content instead of response.text
 
     def build_url(self):
         """

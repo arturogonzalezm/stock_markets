@@ -9,3 +9,4 @@ pytest
 codecov
 pytest-cov
 coverage
+ruff
