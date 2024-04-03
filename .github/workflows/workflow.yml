@@ -63,6 +63,3 @@ jobs:
           fail_ci_if_error: true
       - name: Run Ruff for fast Python linting
         uses: chartboost/ruff-action@v1
-      - name: Lint with black
-        run: |
-          black --check .
