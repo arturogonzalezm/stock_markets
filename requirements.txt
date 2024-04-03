@@ -12,3 +12,5 @@ coverage
 ruff
 pytest-mock
 numpy
+flake8
+black
